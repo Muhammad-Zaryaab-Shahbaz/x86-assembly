@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Ubuntu");
+
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #161e2d;
+    min-height: 100vh;
+    color: #ececec;
+    font-family: "Source Sans Pro", "Ubuntu", sans-serif !important;
+}
+
+@import './module/header';
+@import './module/content';
+
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.model {
+    position: absolute;
+    background-color: #161e2d;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid white;
+    width: 35%;
+    margin: auto;
+    border-radius: 10px;
+    transition: .5s all;
+    display: none;
+    visibility: none;
+    text-align: start;
+}
+
+
+.model .flag {
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    justify-content: space-between;
+    align-items: center;
+    h5{
+        font-size: 1.5rem;
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+    .model-close {
+        font-size: 1.73rem;
+        opacity: .7;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: white;
+        &:hover{
+            opacity: 1;
+        }
+        &:active{
+           border: none;
+           outline: none;
+        }
+    }
+}
+
+.model .flag-model-tag {
+    padding: 1rem;
+
+
+    h5 {
+        font-weight: 300;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width:1150px) {
+    .container {
+        width: 95%;
+    }
+
+    .model {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:750px) {
+
+    .model {
+        width: 80%;
+    }
+}
