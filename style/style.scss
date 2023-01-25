@@ -22,7 +22,9 @@ body {
     margin: auto;
 }
 
-.model {
+.model,
+.model2,
+.model-pop {
     position: absolute;
     background-color: #161e2d;
     left: 50%;
@@ -39,7 +41,9 @@ body {
 }
 
 
-.model .flag {
+.model .flag,
+.model2 .flag,
+.model-pop .flag {
     position: relative;
     padding: 1rem;
     display: flex;
@@ -47,12 +51,16 @@ body {
     border-bottom: 1px solid white;
     justify-content: space-between;
     align-items: center;
-    h5{
+
+    h5 {
         font-size: 1.5rem;
         font-weight: 500;
         text-transform: capitalize;
     }
-    .model-close {
+
+    .model-close,
+    .model-close-validing,
+    .model-close-pop {
         font-size: 1.73rem;
         opacity: .7;
         cursor: pointer;
@@ -60,19 +68,22 @@ body {
         outline: none;
         background-color: transparent;
         color: white;
-        &:hover{
+
+        &:hover {
             opacity: 1;
         }
-        &:active{
-           border: none;
-           outline: none;
+
+        &:active {
+            border: none;
+            outline: none;
         }
     }
 }
 
-.model .flag-model-tag {
+.model .flag-model-tag,
+.model2 .flag-model-tag,
+.model-pop .flag-model-tag {
     padding: 1rem;
-
 
     h5 {
         font-weight: 300;
@@ -85,14 +96,18 @@ body {
         width: 95%;
     }
 
-    .model {
+    .model,
+    .model2,
+    .model-pop {
         width: 50%;
     }
 }
 
 @media screen and (max-width:750px) {
 
-    .model {
+    .model,
+    .model2,
+    .model-pop {
         width: 80%;
     }
 }

@@ -27,7 +27,7 @@
 
     <script src="https://kit.fontawesome.com/4f572bc49d.js" crossorigin="anonymous"></script>
 
-    <title>TryHackMe | x86 Assembly</title>
+    <title>Tryhackme | X86 Assembly</title>
 </head>
 
 <body class="Mainbody body">
@@ -37,14 +37,18 @@
                 <img src="https://assets.tryhackme.com/img/logo/tryhackme_logo_full.svg" alt="image-logo">
             </div>
             <div class="header-content">
-                <h1>x86 Assembly</h1>
-                <p class="header-description">Select the result of assembly instructions from a bunch of different options. Your objective is <u>to give correct answers to all the questions</u>.</p>
+                <h1>X86 Assembly</h1>
+                <span class="header-description">Identify the result of the assembly instructions and help the explorer
+                    reach the final flag.
+                </span>
             </div>
         </div>
-
-        <div class="question">
-           Instruction: <h5 class="question__el"></h5>
+        <div class="stats">
+            <span>Remaining attempts: <b class="atemps"></b></span>
+            <div class="question">  Instruction: <h5 class="question__el"></h5> </div>
+            <span>Time: <b class="second"></b></span>
         </div>
+
         <div class="content">
             <div class="ui-component">
                 <div class="ui-component__container">
@@ -72,6 +76,29 @@
                     <h5>{THM_MegadethRules}</h5>
                 </div>
             </div>
+            <div class="model2">
+                <div class="flag">
+                    <h5>flag</h5>
+                    <p><button class="model-close-validing">&#9747;</button></p>
+                </div>
+                <div class="flag-model-tag">
+                    <h5>{You are out of attempts}</h5>
+                </div>
+            </div>
+            <div class="model-pop">
+                <div class="flag">
+                    <h5>flag</h5>
+                    <p><button class="model-close-pop">&#9747;</button></p>
+                </div>
+                <div class="flag-model-tag model-pop-message">
+                    <h5></h5>
+                </div>
+            </div>
+            
+            
+            <audio id="audio-correct" src="./assests/sound/beep-sound-correct.mp3"></audio>
+            <audio id="audio-wrong" src="./assests/sound/beep-sound-wrong.mp3"></audio>
+
         </div>
     </div>
     <script src="./index.js"></script>

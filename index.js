@@ -10,95 +10,106 @@ const postionImage = document.querySelector('.position-image')
 let currentQuiz = 0
 const progressContainer = document.querySelector('.progress__stats');
 
+const atemps = document.querySelector('.atemps');
+const second = document.querySelector('.second');
+
+
+// these totalAtemps show how many attemps acutual mades & total seconds incdicates that the remaining second 
+let totalAtemps = 0;
+let totalSeconds = 30;
+
+// when user mades all of his atemps then shaffle will be true for questions options
+let shaffle = false;
+
+// valid actually used to check each second that there is no flag ?
+let valid = true;
+
 
 const quizData = [
     {
         question: 'mov eax, 0x5f ?',
-        a: 'Move the value stored in eax to memory location 0x5f ',
-        b: 'Move the value stored in memory location 0x5f to eax',
-        c: 'Move the value 0x5f to memory location stored in eax',
-        d: 'Move the value 0x5f to register eax',
-        correct: 'd'
+        options: ['Move the value stored in eax to memory location 0x5f ', 'Move the value stored in memory location 0x5f to eax', 'Move the value 0x5f to memory location stored in eax', 'Move the value 0x5f to register eax'],
+        correct: 3
     },
     {
         question: 'mov eax, [0x5f] ?',
-        a: 'Move the value stored in eax to memory location 0x5f',
-        b: 'Move the value stored in memory location 0x5f to eax ',
-        c: 'Move the value 0x5f to memory location stored in eax',
-        d: 'Move the value 0x5f to register eax',
-        correct: 'b'
+        options: ['Move the value stored in eax to memory location 0x5f',
+            'Move the value stored in memory location 0x5f to eax ',
+            'Move the value 0x5f to memory location stored in eax',
+            'Move the value 0x5f to register eax'],
+        correct: 1
     },
     {
         question: 'lea eax, [ebp+4] ?',
-        a: 'Add 4 to the memory address referenced by ebp and move the address to eax',
-        b: 'Add 6 to the memory address referenced by ebp and move the address to eax',
-        c: 'Add 8 to the memory address referenced by ebp and move the address to eax',
-        d: 'Add 4 to the value stored in ebp, and move the value to eax',
-        correct: 'd'
+        options: ['Add 4 to the memory address referenced by ebp and move the address to eax',
+            'Add 6 to the memory address referenced by ebp and move the address to eax',
+            'Add 8 to the memory address referenced by ebp and move the address to eax',
+            'Add 4 to the value stored in ebp, and move the value to eax'],
+        correct: 3
     },
     {
         question: 'mov eax, [ebp+4] ?',
-        a: 'Add 4 to the memory address referenced by ebp and move the address to eax',
-        b: ' Add 4 to the value stored in ebp, and move the value to eax',
-        c: 'Add 4 to the value stored in ebp, and move the value to ebq',
-        d: 'Add 6 to the value stored in ebp, and move the value to eax',
-        correct: 'a'
+        options: ['Add 4 to the memory address referenced by ebp and move the address to eax',
+            ' Add 4 to the value stored in ebp, and move the value to eax',
+            'Add 4 to the value stored in ebp, and move the value to ebq',
+            'Add 6 to the value stored in ebp, and move the value to eax'],
+        correct: 0
     },
     {
         question: 'mov eax, 0x5f shr eax, 2 ?',
-        a: 'EAX is now 0x17 and CF is 1 ',
-        b: 'EAX is now 0x2F and CF is 1',
-        c: ' EAX is now 0x17 and CF is 0',
-        d: 'EAX is now 0x2F and CF is 0',
-        correct: 'a'
+        options: ['EAX is now 0x17 and CF is 1 ',
+            'EAX is now 0x2F and CF is 1',
+            ' EAX is now 0x17 and CF is 0',
+            'EAX is now 0x2F and CF is 0'],
+        correct: 0
     },
     {
         question: 'mov eax, 0x5f ror eax, 2 ?',
-        a: 'EAX is now 0x7D ',
-        b: 'EAX is now 0xD7',
-        c: 'EAX is now 0xD8',
-        d: 'EAX is now 0x8D',
-        correct: 'b'
+        options: ['EAX is now 0x7D ',
+            'EAX is now 0xD7',
+            'EAX is now 0xD8',
+            'EAX is now 0x8D'],
+        correct: 1
     },
     {
         question: 'mov eax, 0x5f inc eax ?',
-        a: 'EAX is now 0x7D ',
-        b: 'EAX is now 0xD7',
-        c: ' EAX is now 0x5E',
-        d: 'EAX is now 0x60',
-        correct: 'd'
+        options: ['EAX is now 0x7D ',
+            'EAX is now 0xD7',
+            ' EAX is now 0x5E',
+            'EAX is now 0x60'],
+        correct: 3
     },
     {
         question: 'mov eax 0x5f not eax ?',
-        a: 'EAX is now 0x7D ',
-        b: 'EAX is now 0xD7',
-        c: 'EAX is now 0xA0',
-        d: ' EAX is now 0x60',
-        correct: 'c'
+        options: ['EAX is now 0x7D ',
+            'EAX is now 0xD7',
+            'EAX is now 0xA0',
+            ' EAX is now 0x60'],
+        correct: 2
     },
     {
         question: 'cmp eax, eax jne 0x40100 ?',
-        a: 'The EIP will jump to 0x40100 and ZF will be set ',
-        b: ' The EIP will move to the next instruction and ZF will be set',
-        c: 'The EIP will jump to 0x40100 and ZF will not be set',
-        d: 'The EIP will move to the next instruction and ZF will be set',
-        correct: 'b'
+        options: ['The EIP will jump to 0x40100 and ZF will be set ',
+            ' The EIP will move to the next instruction and ZF will be set',
+            'The EIP will jump to 0x40100 and ZF will not be set',
+            'The EIP will move to the next instruction and ZF will be set'],
+        correct: 1
     },
     {
         question: 'push eax ?',
-        a: 'Push the contents of the EAX register to the bottom of the stack ',
-        b: 'Push the contents of the top of the stack to the EAX register',
-        c: 'Push the contents of the EAX register to the top of the stack',
-        d: ' Push the contents of the bottom of the stack to the EAX register',
-        correct: 'c'
+        options: ['Push the contents of the EAX register to the bottom of the stack ',
+            'Push the contents of the top of the stack to the EAX register',
+            'Push the contents of the EAX register to the top of the stack',
+            ' Push the contents of the bottom of the stack to the EAX register'],
+        correct: 2
     },
     {
-        question: 'push eax ?',
-        a: 'Pop the contents of the EAX register to the bottom of the stack',
-        b: 'Pop the contents of the EAX register to the top of the stack',
-        c: ' Pop the contents of the bottom of the stack to the EAX register',
-        d: 'Pop the contents of the top of the stack to the EAX register',
-        correct: 'd'
+        question: 'pop eax ?',
+        options: ['Pop the contents of the EAX register to the bottom of the stack',
+            'Pop the contents of the EAX register to the top of the stack',
+            ' Pop the contents of the bottom of the stack to the EAX register',
+            'Pop the contents of the top of the stack to the EAX register'],
+        correct: 3
     },
 ];
 
@@ -106,57 +117,161 @@ loadQuiz(currentQuiz);
 
 function loadQuiz(ind) {
     deselectAnswers()
+    totalAtemps = 0;
+
     const currentQuizData = quizData[ind]
+    let options = currentQuizData.options;
+    let optionsInd = [0, 1, 2, 3];
+
+    if (shaffle) {
+        optionsInd.sort(() => Math.random() - 0.5);
+    }
 
     questionEl.innerText = currentQuizData.question
     postionImage.src = `./assests/positions/position-${ind + 1}.png`
-    a_text.innerText = currentQuizData.a
-    b_text.innerText = currentQuizData.b
-    c_text.innerText = currentQuizData.c
-    d_text.innerText = currentQuizData.d
+
+    a_text.innerText = options[optionsInd[0]]
+    b_text.innerText = options[optionsInd[1]]
+    c_text.innerText = options[optionsInd[2]]
+    d_text.innerText = options[optionsInd[3]]
+
     progressContainer.innerHTML = `${ind + 1}/${quizData.length}`;
+
+    totalAtemps = 0;
+    totalSeconds = 30;
 }
 
 answerEls.forEach(el => {
     el.addEventListener('click', (e) => {
-        const id = e.target.id;
+        if (!valid) return;
         const elBtn = e.target;
         deselectAnswers()
 
-        if (id) {
-            if (id !== quizData[currentQuiz].correct) {
-                elBtn.classList.add('highlight-red')
-                return
-            }
-            if (id == quizData[currentQuiz].correct) {
-                elBtn.classList.add('highlight-green')
-                currentQuiz++
-            }
-            if (currentQuiz < quizData.length) {
-                setTimeout(() => {
-                    loadQuiz(currentQuiz)
-                }, 500);
-            } else {
-                const model = document.querySelector('.model')
-                const ui = document.querySelector('.ui-component')
-                ui.style.filter = 'blur(2px)';
-                model.style.display = 'block'
-            }
+        // whenver user selects wrong option
+        if (e.target.innerHTML !== quizData[currentQuiz].options[quizData[currentQuiz].correct]) {
+            elBtn.classList.add('highlight-red')
+            totalAtemps = totalAtemps + 1;
+            if (totalAtemps >= 3) return;
+            atemps.innerHTML = `(${totalAtemps}/3)`;
+
+            const modelMessage = document.querySelector('.model-pop-message');
+            modelMessage.innerHTML = `You have ${3 - totalAtemps} ${3 - totalAtemps == 1 ? 'attempt' : 'attempts'} remaining.`
+            if (totalAtemps !== 3) { popUpFn(); valid = false }
+            const audioWrong = document.getElementById("audio-wrong");
+            audioWrong.play();
+            return
         }
+        // whenver user selects correct option
+        if (e.target.innerHTML == quizData[currentQuiz].options[quizData[currentQuiz].correct]) {
+            elBtn.classList.add('highlight-green')
+            currentQuiz++
+            const audioCorrect = document.getElementById("audio-correct");
+            audioCorrect.play();
+        }
+
+        // check if quiz question is last then show flag
+        if (currentQuiz < quizData.length) {
+            setTimeout(() => {
+                loadQuiz(currentQuiz)
+            }, 500);
+        } else {
+            const model = document.querySelector('.model')
+            const ui = document.querySelector('.ui-component')
+            ui.style.filter = 'blur(2px)';
+            model.style.display = 'block'
+        }
+
     })
 })
 
-function deselectAnswers() { answerEls.forEach(answerEls => {
-    answerEls.classList.remove('highlight-red')
-    answerEls.classList.remove('highlight-green')
+function deselectAnswers() {
+    answerEls.forEach(answerEls => {
+        answerEls.classList.remove('highlight-red')
+        answerEls.classList.remove('highlight-green')
 
-}) }
+    })
+}
+
+const popUpFn = () => {
+    const model = document.querySelector('.model-pop');
+    model.style.display = 'block';
+    const ui = document.querySelector('.ui-component')
+    ui.style.filter = 'blur(2px)';
+}
 
 
+// fun to authenticate each second.
+setInterval(() => { authAtempsSeconds() }, 1000);
+function authAtempsSeconds() {
+    if (!valid) return;
+    if (totalSeconds <= 10) second.style.color = '#f1685e'
+    else second.style.color = 'white'
+
+    if (totalSeconds == 0) {
+        totalAtemps = totalAtemps + 1;
+        totalSeconds = 30;
+        second.innerHTML = `${totalSeconds}s`
+        const modelMessage = document.querySelector('.model-pop-message');
+        modelMessage.innerHTML = `You have ${3 - totalAtemps} attempts remaining `
+        if (totalAtemps !== 3) { popUpFn(); valid = false }
+    }
+
+    if (totalAtemps === 3 || totalAtemps > 3) {
+
+        shaffle = true;
+        const model2 = document.querySelector('.model2');
+        model2.style.display = 'block';
+        const ui = document.querySelector('.ui-component')
+        ui.style.filter = 'blur(2px)';
+
+        valid = false;
+        return;
+    } else {
+        atemps.innerHTML = `(${totalAtemps}/3)`;
+        second.innerHTML = `${totalSeconds}s`
+        totalSeconds = totalSeconds - 1;
+
+
+        return;
+    }
+}
+
+// event listener for last flag as result
 if (document.querySelector('.model-close')) {
     const model = document.querySelector('.model')
     document.querySelector('.model-close').addEventListener('click', (e) => {
         location.reload();
+        model.style.display = 'none'
+    })
+}
+
+
+
+// event listener for while no atemps left
+if (document.querySelector('.model-close-validing')) {
+    const model = document.querySelector('.model2')
+    document.querySelector('.model-close-validing').addEventListener('click', (e) => {
+        const ui = document.querySelector('.ui-component')
+        ui.style.filter = 'blur(0px)';
+
+        valid = true;
+        currentQuiz = 0
+        totalAtemps = 0;
+        totalSeconds = 30;
+
+        loadQuiz(currentQuiz)
+        model.style.display = 'none'
+    })
+}
+
+
+if (document.querySelector('.model-close-pop')) {
+    const model = document.querySelector('.model-pop')
+    document.querySelector('.model-close-pop').addEventListener('click', (e) => {
+        const ui = document.querySelector('.ui-component')
+        ui.style.filter = 'blur(0px)';
+        totalSeconds = 30;
+        valid = true;
         model.style.display = 'none'
     })
 }
