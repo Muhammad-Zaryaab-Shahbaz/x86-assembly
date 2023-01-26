@@ -92,7 +92,7 @@ const quizData = [
         options: ['The EIP will jump to 0x40100 and ZF will be set ',
             ' The EIP will move to the next instruction and ZF will be set',
             'The EIP will jump to 0x40100 and ZF will not be set',
-            'The EIP will move to the next instruction and ZF will be set'],
+            'The EIP will move to the next instruction and ZF will not be set'],
         correct: 1
     },
     {
@@ -151,14 +151,15 @@ answerEls.forEach(el => {
         if (e.target.innerHTML !== quizData[currentQuiz].options[quizData[currentQuiz].correct]) {
             elBtn.classList.add('highlight-red')
             totalAtemps = totalAtemps + 1;
-            if (totalAtemps >= 3) return;
+            if (totalAtemps > 3) return;
             atemps.innerHTML = `(${totalAtemps}/3)`;
 
             const modelMessage = document.querySelector('.model-pop-message');
             modelMessage.innerHTML = `You have ${3 - totalAtemps} ${3 - totalAtemps == 1 ? 'attempt' : 'attempts'} remaining.`
-            if (totalAtemps !== 3) { popUpFn(); valid = false }
             const audioWrong = document.getElementById("audio-wrong");
             audioWrong.play();
+            if (totalAtemps !== 3) { popUpFn(); valid = false }
+           
             return
         }
         // whenver user selects correct option
@@ -179,7 +180,8 @@ answerEls.forEach(el => {
             const ui = document.querySelector('.ui-component')
             ui.style.filter = 'blur(2px)';
             model.style.display = 'block'
-        }
+            valid = false;
+        }   
 
     })
 })
@@ -213,6 +215,8 @@ function authAtempsSeconds() {
         second.innerHTML = `${totalSeconds}s`
         const modelMessage = document.querySelector('.model-pop-message');
         modelMessage.innerHTML = `You have ${3 - totalAtemps} attempts remaining `
+        const audioWrong = document.getElementById("audio-wrong");
+        audioWrong.play();
         if (totalAtemps !== 3) { popUpFn(); valid = false }
     }
 
@@ -244,16 +248,11 @@ if (document.querySelector('.model-close')) {
         model.style.display = 'none'
     })
 }
-
-
-
-// event listener for while no atemps left
-if (document.querySelector('.model-close-validing')) {
+if (document.querySelector('.restart-button')) {
     const model = document.querySelector('.model2')
-    document.querySelector('.model-close-validing').addEventListener('click', (e) => {
+    document.querySelector('.restart-button').addEventListener('click', (e) => {
         const ui = document.querySelector('.ui-component')
         ui.style.filter = 'blur(0px)';
-
         valid = true;
         currentQuiz = 0
         totalAtemps = 0;
@@ -263,8 +262,20 @@ if (document.querySelector('.model-close-validing')) {
         model.style.display = 'none'
     })
 }
+if (document.querySelector('.model-close-validing')) {
+    const model = document.querySelector('.model2')
+    document.querySelector('.model-close-validing').addEventListener('click', (e) => {
+        const ui = document.querySelector('.ui-component')
+        ui.style.filter = 'blur(0px)';
+        valid = true;
+        currentQuiz = 0
+        totalAtemps = 0;
+        totalSeconds = 30;
 
-
+        loadQuiz(currentQuiz)
+        model.style.display = 'none'
+    })
+}
 if (document.querySelector('.model-close-pop')) {
     const model = document.querySelector('.model-pop')
     document.querySelector('.model-close-pop').addEventListener('click', (e) => {
@@ -273,5 +284,6 @@ if (document.querySelector('.model-close-pop')) {
         totalSeconds = 30;
         valid = true;
         model.style.display = 'none'
+        deselectAnswers()
     })
 }
