@@ -117,7 +117,6 @@ loadQuiz(currentQuiz);
 
 function loadQuiz(ind) {
     deselectAnswers()
-    totalAtemps = 0;
 
     const currentQuizData = quizData[ind]
     let options = currentQuizData.options;
@@ -137,7 +136,6 @@ function loadQuiz(ind) {
 
     progressContainer.innerHTML = `${ind + 1}/${quizData.length}`;
 
-    totalAtemps = 0;
     totalSeconds = 30;
 }
 
