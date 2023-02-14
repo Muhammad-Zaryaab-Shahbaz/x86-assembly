@@ -154,18 +154,13 @@ answerEls.forEach(el => {
 
             const modelMessage = document.querySelector('.model-pop-message');
             modelMessage.innerHTML = `You have ${3 - totalAtemps} ${3 - totalAtemps == 1 ? 'attempt' : 'attempts'} remaining.`
-            const audioWrong = document.getElementById("audio-wrong");
-            audioWrong.play();
             if (totalAtemps !== 3) { popUpFn(); valid = false }
-           
             return
         }
         // whenver user selects correct option
         if (e.target.innerHTML == quizData[currentQuiz].options[quizData[currentQuiz].correct]) {
             elBtn.classList.add('highlight-green')
             currentQuiz++
-            const audioCorrect = document.getElementById("audio-correct");
-            audioCorrect.play();
         }
 
         // check if quiz question is last then show flag
@@ -213,8 +208,6 @@ function authAtempsSeconds() {
         second.innerHTML = `${totalSeconds}s`
         const modelMessage = document.querySelector('.model-pop-message');
         modelMessage.innerHTML = `You have ${3 - totalAtemps} attempts remaining `
-        const audioWrong = document.getElementById("audio-wrong");
-        audioWrong.play();
         if (totalAtemps !== 3) { popUpFn(); valid = false }
     }
 
